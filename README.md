@@ -1,4 +1,3 @@
-NetworkAPIDemo
-==============
+CrossOperatorAPIDemo
 
-Android Demonstration App using OneAPI
+Demonstrates the use of cross operator API services including payments &amp; operator identity
