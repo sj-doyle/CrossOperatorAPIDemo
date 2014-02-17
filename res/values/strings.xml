@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Cross Operator API Demo</string>
+    <string name="menu_settings">Settings</string>
+    <string name="start_text">Operator Discovery</string>
+    <string name="start">Start</string>
+    <string name="restart">Restart</string>
+    <string name="demoID">Demo ID</string>
+    <string name="requesting">Discovering</string>
+    <string name="promptStatus">Network Status</string>
+    <string name="promptMCC">MCC</string>
+    <string name="promptMNC">MNC</string>
+    <string name="promptMCCMNC">Send MCC/MNC in discovery</string>
+    <string name="promptCookies">Send cookies if using webview</string>
+    <string name="valueMCC"></string>
+    <string name="valueMNC"></string>
+    <string name="valueStatus">unknown</string>
+    <string name="notConnectedToInternet">Sorry, you don\'t seem to be connected to the Internet now.</string>
+    <string name="unknownOperator">Sorry, the details for authenticating via your operator are not known</string>
+    <string name="promptTestMode">Test Mode</string>
+    <string name="developerOperatorPrompt">Developer Operator</string>
+    <string name="servingOperatorPrompt">Serving Operator</string>
+    
+    
+    <string name="makingRequest">making HTTP request to </string>
+            
+    <string name="statusDisconnected">disconnected</string>
+    <string name="statusOnNet">on-net</string>
+    <string name="statusOffNet">off-net</string>
+    <string name="statusRoaming">roaming</string>
+    
+    <string name="signInPrompt">Contacting server&#8230;</string>
+
+	<string name="signInCompleteHeading">Identified</string>
+	<string name="signInCompleteInfo">Thank you for signing in through your mobile operator. The identity returned by your operator is:</string>
+	<string name="signInCompleteID">ID</string>
+	<string name="differentAssocHandles">Different assoc_handle values. </string>
+	<string name="signInCompleteEmailLabel">Email</string>
+	<string name="signInCompleteEmailValue"></string>
+
+	<string name="signInRejectHeading">Not Identified</string>
+	<string name="signInRejectInfo">Sorry you decided not to sign in through your mobile operator.</string>
+	
+	<string name="completionAttributes">Attributes</string>
+	<string name="completionPageRestart">Run again</string>
+			
+	<string name="discoveryCompleteText">Operator Discovery Complete</string>
+	<string name="discoveryPromptServices">These services are available</string>
+	<string name="discoveryOperatorID">Operator ID</string>
+	<string name="discoveryPaymentCharge">Payment::1 Phase</string>
+	<string name="discoveryPaymentReserve">Payment::2 Phase</string>
+	<string name="discoveryTest">Start</string>
+	<string name="discoveryNotYetImplemented">Not yet implemented</string>
+	<string name="discoveryServingOperatorName">Operator Name</string>
+					
+	<string name="attributesHeading">Attributes</string>
+	<string name="attributesPromptPrefix">Prefix</string>
+	<string name="attributesValuePrefix"></string>
+	<string name="attributesPromptFirstName">First Name</string>
+	<string name="attributesValueFirstName"></string>
+	<string name="attributesPromptLastName">Last Name</string>
+	<string name="attributesValueLastName"></string>
+	<string name="attributesPromptCity">City</string>
+	<string name="attributesValueCity"></string>
+	<string name="attributesPromptCountry">Country</string>
+	<string name="attributesValueCountry"></string>
+	<string name="attributesPromptLanguage">Language</string>
+	<string name="attributesValueLanguage"></string>
+	<string name="attributesPromptPostalCode">Postal Code</string>
+	<string name="attributesValuePostalCode"></string>
+	<string name="attributesPromptPostalAddress">Postal Address</string>
+	<string name="attributesValuePostalAddress"></string>
+	<string name="attributesPageRestart">Run again</string>
+	
+	<string name="paymentStartHeading">Pay via your mobile</string>
+	<string name="paymentStartInfo">This app would like to charge against your mobile account</string>
+	<string name="paymentStartPayNow">Pay now</string>
+	<string name="paymentStartCurrencyPrompt">Currency</string>
+	<string name="paymentStartCurrencyValue"></string>
+	<string name="paymentStartAmountPrompt">Amount</string>
+	<string name="paymentStartAmountValue"></string>
+	<string name="paymentStartMethodPrompt">Payment method</string>
+	<string name="paymentStartMethodValue"></string>
+				
+	<string name="paymentConsentCompleteHeading">Payment Consent Complete</string>			
+	<string name="paymentConsentCompleteInfo">Consent process complete - result:</string>
+	<string name="paymentConsentCompleteStatusLabel">Status</string>
+	<string name="paymentConsentCompleteStatusValue"></string>
+	<string name="paymentConsentCompleteTransactionIdLabel">Transaction ID</string>
+	<string name="paymentConsentCompleteTransactionIdValue"></string>
+	<string name="paymentConsentCompleteServerReferenceLabel">Server Reference Code</string>
+	<string name="paymentConsentCompleteServerReferenceValue">T.B.D</string>
+	<string name="paymentConsentCompleteQuery">Query Status</string>
+	<string name="paymentConsentCompleteChargeReservation">Charge reservation</string>
+		
+	<string name="authorizationCompleteHeading">Authorization Complete</string>
+	<string name="authorizationCompleteInfo">Thank you. Result of your sign-in:</string>
+	<string name="authorizationCompleteStatus">Status</string>
+	<string name="authorizationCompleteNameLabel">Name</string>
+	<string name="authorizationCompleteNameValue"></string>
+	<string name="authorizationCompleteEmailLabel">Email</string>
+	<string name="authorizationCompleteEmailValue"></string>
+	<string name="authorizationCompleteSubLabel">Subject Identifier</string>
+	<string name="authorizationCompleteSubValue"></string>
+	<string name="authorizationCompleteGenderLabel">Gender</string>
+	<string name="authorizationCompleteGenderValue"></string>
+	<string name="authorizationCompleteLocaleLabel">Locale</string>
+	<string name="authorizationCompleteLocaleValue"></string>
+	<string name="authorizationCompleteRestart">Restart</string>
+	
+	
+</resources>

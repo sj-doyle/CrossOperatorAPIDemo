@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.gsma.android.xoperatorapidemo"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="11" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE"/>    
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+	
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.gsma.android.xoperatorapidemo.activity.MainActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name="com.gsma.android.xoperatorapidemo.activity.discovery.DisplayDiscoveryWebsiteActivity"/>
+        <activity android:name="com.gsma.android.xoperatorapidemo.activity.discovery.DiscoveryCompleteActivity"/>
+        
+        <activity android:name="com.gsma.android.xoperatorapidemo.activity.payment.PaymentStartActivity"/>
+        <activity android:name="com.gsma.android.xoperatorapidemo.activity.payment.PaymentConsentCompleteActivity">
+	        <intent-filter>
+	  			<action android:name="android.intent.action.VIEW" />
+	  			<category android:name="android.intent.category.DEFAULT" />
+	  			<category android:name="android.intent.category.BROWSABLE" />
+	  			<data android:scheme="gsmademo" android:host="paymentConsentComplete" />
+			</intent-filter>
+		</activity>
+
+        <activity android:name="com.gsma.android.xoperatorapidemo.activity.identity.DisplayIdentityWebsiteActivity"/>
+        <activity android:name="com.gsma.android.xoperatorapidemo.activity.identity.AuthorizationCompleteActivity"/>
+        
+        <activity android:name="com.gsma.android.xoperatorapidemo.activity.openid2.AttributesDisplayActivity"/>
+        <activity android:name="com.gsma.android.xoperatorapidemo.activity.openid2.SignInActivityInActivity"/>
+        <activity android:name="com.gsma.android.xoperatorapidemo.activity.openid2.ReceiveIDActivityIDActivity">
+	        <intent-filter>
+	  			<action android:name="android.intent.action.VIEW" />
+	  			<category android:name="android.intent.category.DEFAULT" />
+	  			<category android:name="android.intent.category.BROWSABLE" />
+	  			<data android:scheme="gsmademo" android:host="loginredirect" />
+			</intent-filter>
+		</activity>
+
+    </application>
+
+</manifest>

@@ -1,0 +1,105 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context=".DiscoveryCompleteActivity" >
+
+    <TextView
+        android:id="@+id/discoveryCompleteText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/discoveryCompleteText" />
+
+    <TextView
+        android:id="@+id/discoveryServingOperatorName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/discoveryCompleteText"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="19dp"
+        android:layout_marginTop="30dp"
+        android:text="@string/discoveryServingOperatorName"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/discoveryPromptServices"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/discoveryServingOperatorName"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="19dp"
+        android:layout_marginTop="30dp"
+        android:text="@string/discoveryPromptServices"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <CheckBox
+        android:id="@+id/discoveryOperatorID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/discoveryPromptServices"
+        android:layout_below="@+id/discoveryPromptServices"
+        android:layout_marginTop="24dp"
+        android:clickable="false"
+        android:text="@string/discoveryOperatorID" />
+
+    <Button
+        android:id="@+id/testOperatorID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/discoveryOperatorID"
+        android:layout_centerHorizontal="true"
+        android:layout_marginRight="20dp"
+        android:onClick="testOperatorID"
+        android:text="@string/discoveryTest" />
+    
+    <CheckBox
+        android:id="@+id/discoveryPaymentCharge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/discoveryPromptServices"
+        android:layout_below="@+id/discoveryOperatorID"
+        android:layout_marginTop="14dp"
+        android:clickable="false"
+        android:text="@string/discoveryPaymentCharge" />
+    
+    <Button
+        android:id="@+id/testPaymentCharge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/discoveryPaymentCharge"
+        android:layout_centerHorizontal="true"
+        android:layout_marginRight="20dp"
+        android:onClick="testPayment1Phase"
+        android:text="@string/discoveryTest" />
+    
+    <CheckBox
+        android:id="@+id/discoveryPaymentReserve"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/discoveryPromptServices"
+        android:layout_below="@+id/discoveryPaymentCharge"
+        android:layout_marginTop="14dp"
+        android:clickable="false"
+        android:text="@string/discoveryPaymentReserve" />
+    
+    <Button
+        android:id="@+id/testPaymentReserve"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/discoveryPaymentReserve"
+        android:layout_centerHorizontal="true"
+        android:layout_marginRight="20dp"
+        android:onClick="testPayment2Phase"
+        android:text="@string/discoveryTest" />
+            
+</RelativeLayout>
