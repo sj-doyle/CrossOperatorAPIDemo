@@ -42,14 +42,12 @@ public class RetrieveUserinfoTask extends AsyncTask<Void, Void, JSONObject> {
 	@Override
 	protected JSONObject doInBackground(Void... params) {
 		JSONObject json=null;
-		
-		
-//		code=4/P7q7W91a-oMsCeLvIaQm6bTrgtp7&
-//				client_id=8819981768.apps.googleusercontent.com&
-//				client_secret={client_secret}&
-//				redirect_uri=https://oauth2-login-demo.appspot.com/code&
-//				
-		
+				
+		Log.d(TAG, "Pausing a short while");
+		try {
+			Thread.sleep(3000);
+		} catch (Exception e) {}
+
 		Log.d(TAG, "requestUri="+userinfoUri);
 		
 		HttpGet httpRequest = new HttpGet(userinfoUri);

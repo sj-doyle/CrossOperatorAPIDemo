@@ -43,4 +43,4 @@ proguard/
 *.ipr
 *.iws
 .idea/
-
+assets/google.properties

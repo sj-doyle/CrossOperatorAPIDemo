@@ -247,9 +247,8 @@ public class MainActivity extends Activity {
 		Log.d(TAG, "demoOpenIDConnectUserinfoEndpoint="+demoOpenIDConnectUserinfoEndpoint);
 		Log.d(TAG, "demoOpenIDConnectScopes="+demoOpenIDConnectScopes);
 		
-//		String returnUri="http://oauth2callback.gsma.com/oauth2callback";
-		String returnUri="http://apigee.com";
-		
+		String returnUri="http://oauth2callback.gsma.com/oauth2callback";
+
 		Intent intent = new Intent(
 				mainActivityInstance,
 				DisplayIdentityWebsiteActivity.class);

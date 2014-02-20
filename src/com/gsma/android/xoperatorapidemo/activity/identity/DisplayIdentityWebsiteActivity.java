@@ -81,7 +81,6 @@ public class DisplayIdentityWebsiteActivity extends Activity {
 
 			WebView view = (WebView) findViewById(R.id.identityWebView);
 			
-			
 			view.setWebViewClient(new WebViewClient() {
 
 				/*
@@ -155,43 +154,23 @@ public class DisplayIdentityWebsiteActivity extends Activity {
 							startActivity(intent);
 						}
 
-						/*
-						 * http://oauth2callback.gsma.com/oauth2callback?
-						 * state=f32ba4eb-4c20-41e3-8905-fcc9235c7373&
-						 * code=4/7OrTRq7KXurOvX_nzNKCDBih908C.4mX4SCwlxZoTYKs_1NgQtmXBgscviAI&
-						 * authuser=0
-						 * &prompt=consent
-						 * &session_state=40fee65c71277bb65ef64aa0714c2745a57ecce9..32c3
-						 * 
-						 * http://oauth2callback.gsma.com/oauth2callback?
-						 * error=access_denied
-						 * &state=986325d8-3e4b-4d27-9565-ec65573abb2e
-
-						 */
-
-
-						/*
-						 * There is no need to load the remainder of this url as
-						 * the discovery token was located
-						 */
 					}
 				}
 
 			});
 			
-			HashMap<String, String> extraheaders = new HashMap<String, String>();
-
-			/*
-			 * load the specified URI along with the authorization header
-			 */
-			view.loadUrl(requestUri, extraheaders);
-
 			/*
 			 * enable JavaScript - the discovery web pages are enhanced with
 			 * JavaScript
 			 */
 			WebSettings settings = view.getSettings();
 			settings.setJavaScriptEnabled(true);
+
+			/*
+			 * load the specified URI along with the authorization header
+			 */
+			HashMap<String, String> extraheaders = new HashMap<String, String>();
+			view.loadUrl(requestUri, extraheaders);
 		}
 	}
 

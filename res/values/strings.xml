@@ -6,7 +6,7 @@
     <string name="start_text">Operator Discovery</string>
     <string name="start">Start</string>
     <string name="restart">Restart</string>
-    <string name="demoID">Demo ID</string>
+    <string name="demoID">DT ID Demo</string>
     <string name="requesting">Discovering</string>
     <string name="promptStatus">Network Status</string>
     <string name="promptMCC">MCC</string>

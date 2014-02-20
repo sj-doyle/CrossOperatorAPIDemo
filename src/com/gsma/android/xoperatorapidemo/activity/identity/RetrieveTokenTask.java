@@ -55,12 +55,10 @@ public class RetrieveTokenTask extends AsyncTask<Void, Void, JSONObject> {
 	protected JSONObject doInBackground(Void... params) {
 		JSONObject json=null;
 		
-		
-//		code=4/P7q7W91a-oMsCeLvIaQm6bTrgtp7&
-//				client_id=8819981768.apps.googleusercontent.com&
-//				client_secret={client_secret}&
-//				redirect_uri=https://oauth2-login-demo.appspot.com/code&
-//				
+		Log.d(TAG, "Pausing a short while");
+		try {
+			Thread.sleep(3000);
+		} catch (Exception e) {}
 		
 		Log.d(TAG, "requestUri="+tokenUri);
 		
@@ -126,8 +124,6 @@ public class RetrieveTokenTask extends AsyncTask<Void, Void, JSONObject> {
 			Log.d(TAG, "Converting response data "+responseData);
 			json=new JSONObject(responseData);
 			
-//			DiscoveryData discoveryData=JsonUtils.readDiscoveryData(is);
-//
 		} catch (java.io.IOException ioe) {
 			Log.e(TAG, "IOException "+ioe.getMessage());
 			json=new JSONObject();

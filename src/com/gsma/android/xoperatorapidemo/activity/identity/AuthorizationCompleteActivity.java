@@ -16,7 +16,7 @@ import com.gsma.android.xoperatorapidemo.activity.MainActivity;
 /*
  * initiate the process of sign-in using the OperatorID API. 
  * the sign-in process is based on the user accessing the operator portal
- * through a browser. It is based on OpenID 2
+ * through a browser. It is based on OpenID Connect
  * 
  * details on using an external browser are not finalised therefore at the moment
  * this uses a WebView
@@ -132,7 +132,6 @@ public class AuthorizationCompleteActivity extends OpenIDConnectAbstractActivity
 	@Override
 	void processTokenResponse(JSONObject response) {
 		Log.d(TAG, "processs token");
-//		authorizationCompleteEmailValue.setText("not available");
 		try {
 			String access_token = (String) response.get("access_token");
 			if (access_token!=null && access_token.trim().length()>0) {
@@ -147,11 +146,11 @@ public class AuthorizationCompleteActivity extends OpenIDConnectAbstractActivity
 					String dec=new String(decoded);
 					Log.d(TAG, "decoded to "+dec);
 					JSONObject json=new JSONObject(dec);
-					String email=json.getString("email");
+					String email=json.has("email")?json.getString("email"):null;
 					if (email!=null && email.trim().length()>0) {
 						authorizationCompleteEmailValue.setText(email);
 					}
-					String sub=json.getString("sub");
+					String sub=json.has("sub")?json.getString("sub"):null;
 					if (sub!=null && sub.trim().length()>0) {
 						authorizationCompleteSubValue.setText(sub);
 					}
@@ -172,8 +171,6 @@ public class AuthorizationCompleteActivity extends OpenIDConnectAbstractActivity
 	void processUserinfoResponse(JSONObject response) {
 		Log.d(TAG, "processs userinfo");
 		if (response!=null) {
-			TextView authorizationCompleteEmailValue = (TextView) findViewById(R.id.authorizationCompleteEmailValue);
-			TextView statusField = (TextView) findViewById(R.id.authorizationCompleteStatus);
 			statusField.setText("retrieved userinfo");
 			try {
 				String email=response.has("email")?response.getString("email"):null;
