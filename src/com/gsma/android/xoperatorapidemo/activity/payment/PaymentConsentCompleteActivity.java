@@ -35,7 +35,7 @@ import com.gsma.android.xoperatorapidemo.payment.PaymentStates;
 import com.gsma.android.xoperatorapidemo.utils.HttpUtils;
 import com.gsma.android.xoperatorapidemo.utils.ParameterList;
 
-public class PaymentConsentCompleteActivity extends Activity {
+public class PaymentConsentCompleteActivity extends PaymentAbstractActivity {
 	private static final String TAG = "PaymentConsentCompleteActivity";
 
 	PaymentConsentCompleteActivity paymentConsentCompleteActivityInstance = null;
@@ -141,159 +141,40 @@ public class PaymentConsentCompleteActivity extends Activity {
 	
 	public void claim(View view) {
 		Log.d(TAG, "claim payment");
-		if (resourceURL!=null && payment2Phase && transactionOperationStatus.equalsIgnoreCase(PaymentStates.RESERVED) && amountReservationTransaction!=null) {
-			AmountReservationTransactionWrapper amountReservationTransactionWrapper=new AmountReservationTransactionWrapper();
-			AmountReservationTransaction claim=new AmountReservationTransaction();
-			amountReservationTransactionWrapper.setAmountReservationTransaction(claim);
-			claim.setPaymentAmount(amountReservationTransaction.getPaymentAmount());
-			claim.setReferenceSequence(amountReservationTransaction.getReferenceSequence()+1);
-			claim.setEndUserId(amountReservationTransaction.getEndUserId());
-			claim.setCallbackReference(amountReservationTransaction.getCallbackReference());
-			claim.setTransactionOperationStatus(PaymentStates.CHARGED);
-			claim.setReferenceCode(amountReservationTransaction.getReferenceCode());
-			claim.setClientCorrelator(null);
-			claim.setOriginalServerReferenceCode(amountReservationTransaction.getServerReferenceCode());
-			
-			ObjectMapper objectMapper = new ObjectMapper();
-			objectMapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
-			
-			try {
-				String jsonData = objectMapper.writeValueAsString(amountReservationTransactionWrapper);
-				Log.d(TAG, "HTTP Post to "+resourceURL);
-				Log.d(TAG, "ClientID: "+discoveryData.getResponse().getClient_id());
-				Log.d(TAG, "ClientSecret: "+discoveryData.getResponse().getClient_secret());
-				Log.d(TAG, "Data: "+jsonData);
-			
-				HttpClient httpClient = HttpUtils.getHttpClient(resourceURL,
-						discoveryData.getResponse().getClient_id(), discoveryData.getResponse().getClient_secret());
-		
-				HttpPost httpRequest = new HttpPost(resourceURL);
-				httpRequest.addHeader("Content-Type", "application/json");
-				httpRequest.addHeader("Accept", "application/json");
-		
-				HttpParams httpParams = httpRequest.getParams();
-				httpParams.setParameter(ClientPNames.HANDLE_REDIRECTS,Boolean.FALSE);
-				httpRequest.setParams(httpParams);
-				
-				StringEntity se = new StringEntity(jsonData);
-				
-				httpRequest.setEntity(se);
-				
-				HttpResponse httpResponse = httpClient.execute(httpRequest);
-				
-				int statusCode=httpResponse.getStatusLine().getStatusCode();
-
-				Log.d(TAG, "Response status code = "+httpResponse.getStatusLine().getStatusCode());
-				
-				String jsonResponse=HttpUtils.getContentsFromHttpResponse(httpResponse);
-				
-		        Log.d(TAG, "Read "+jsonResponse);
-					        
-		        if (statusCode==HttpStatus.SC_OK) { 
-		            ObjectMapper mapper=new ObjectMapper();
-		            AmountReservationTransactionWrapper amountReservationTransactionResponseWrapper=
-		            		mapper.readValue(jsonResponse, AmountReservationTransactionWrapper.class);
-		        	if (amountReservationTransactionResponseWrapper!=null && amountReservationTransactionResponseWrapper.getAmountReservationTransaction()!=null) {
-		        		AmountReservationTransaction amountReservationTransactionResponse=amountReservationTransactionResponseWrapper.getAmountReservationTransaction();
-		        		paymentConsentCompleteStatusValue.setText(amountReservationTransactionResponse.getTransactionOperationStatus());
-		        	}
-		        }
-			} catch (JsonGenerationException e) {
-				e.printStackTrace();
-			} catch (JsonMappingException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		
-
-		}
+		ReservationClaimTask reservationClaimTask=new ReservationClaimTask(paymentConsentCompleteActivityInstance, discoveryData, resourceURL, 
+				payment2Phase, transactionOperationStatus, amountReservationTransaction);
+		reservationClaimTask.execute();
 	}
 
 	public void query(View view) {
 		Log.d(TAG, "query payment");
-		if (resourceURL!=null && (resourceURL.startsWith("http://") || resourceURL.startsWith("https://"))) {
-			if (payment1Phase) {
-				if (PaymentStates.CHARGED.equalsIgnoreCase(transactionOperationStatus)) {
-					try {
-						HttpClient httpClient = HttpUtils.getHttpClient(resourceURL,
-								discoveryData.getResponse().getClient_id(), discoveryData.getResponse().getClient_secret());
-			
-						HttpGet httpRequest = new HttpGet(resourceURL);
-				
-						httpRequest.addHeader("Accept", "application/json");
-				
-						HttpParams httpParams = httpRequest.getParams();
-						httpParams.setParameter(ClientPNames.HANDLE_REDIRECTS,Boolean.FALSE);
-						httpRequest.setParams(httpParams);
-						HttpResponse httpResponse = httpClient.execute(httpRequest);
-						
-						int statusCode=httpResponse.getStatusLine().getStatusCode();
-						
-						Log.d(TAG, "queryTransactionStatus completion code="+statusCode);
-						
-						String jsonResponse=HttpUtils.getContentsFromHttpResponse(httpResponse);
-						
-				        Log.d(TAG, "Read "+jsonResponse);
+		PaymentQueryTask paymentQueryTask=new PaymentQueryTask(paymentConsentCompleteActivityInstance, discoveryData, resourceURL, payment1Phase, payment2Phase, 
+			 transactionOperationStatus);
+		paymentQueryTask.execute();
+	}
 
-				        if (statusCode==HttpStatus.SC_OK) {
-				            ObjectMapper mapper=new ObjectMapper();
-				        	AmountTransactionWrapper amountTransactionResponseWrapper=mapper.readValue(jsonResponse, AmountTransactionWrapper.class);
-				        	if (amountTransactionResponseWrapper!=null && amountTransactionResponseWrapper.getAmountTransaction()!=null) {
-				        		amountTransaction=amountTransactionResponseWrapper.getAmountTransaction();
-				        		
-				        		paymentConsentCompleteServerReferenceValue.setText(amountTransaction.getServerReferenceCode());
-				        	}
-				        }
-				        
-					} catch (IOException ioe) {
-						
-					}
-				} // Charge response
-				
-			} else if (payment2Phase) {
-				if (PaymentStates.CHARGED.equalsIgnoreCase(transactionOperationStatus) || PaymentStates.RESERVED.equalsIgnoreCase(transactionOperationStatus)) {
-					try {
-						HttpClient httpClient = HttpUtils.getHttpClient(resourceURL,
-								discoveryData.getResponse().getClient_id(), discoveryData.getResponse().getClient_secret());
-			
-						HttpGet httpRequest = new HttpGet(resourceURL);
-				
-						httpRequest.addHeader("Accept", "application/json");
-				
-						HttpParams httpParams = httpRequest.getParams();
-						httpParams.setParameter(ClientPNames.HANDLE_REDIRECTS,Boolean.FALSE);
-						httpRequest.setParams(httpParams);
-						HttpResponse httpResponse = httpClient.execute(httpRequest);
-						
-						int statusCode=httpResponse.getStatusLine().getStatusCode();
-						
-						Log.d(TAG, "queryTransactionStatus completion code="+statusCode);
-				
-						String jsonResponse=HttpUtils.getContentsFromHttpResponse(httpResponse);
-						
-				        Log.d(TAG, "Read "+jsonResponse);
-						
-				        if (statusCode==HttpStatus.SC_OK) {
-				            ObjectMapper mapper=new ObjectMapper();
-				        	AmountReservationTransactionWrapper amountReservationTransactionResponseWrapper=
-				        			mapper.readValue(jsonResponse, AmountReservationTransactionWrapper.class);
-				        	if (amountReservationTransactionResponseWrapper!=null && amountReservationTransactionResponseWrapper.getAmountReservationTransaction()!=null) {
-				        		amountReservationTransaction=amountReservationTransactionResponseWrapper.getAmountReservationTransaction();
-				        		transactionOperationStatus=amountReservationTransaction.getTransactionOperationStatus();
-				        		paymentConsentCompleteServerReferenceValue.setText(amountReservationTransaction.getServerReferenceCode());
-				        		
-								if (transactionOperationStatus!=null && transactionOperationStatus.equalsIgnoreCase(PaymentStates.RESERVED)) {
-									paymentConsentCompleteChargeReservation.setVisibility(View.VISIBLE);
-								}
-				        	}
-				        } 
-				        
-					} catch (IOException ioe) {
-						
-					}
-				} // charged or reserved
+	@Override
+	void processQueryResponse(Object response) {
+		if (response!=null) {
+			if (response instanceof AmountTransaction) {
+				amountTransaction=(AmountTransaction) response;
+        		paymentConsentCompleteServerReferenceValue.setText(amountTransaction.getServerReferenceCode());
+			} else if (response instanceof AmountReservationTransaction) {
+				amountReservationTransaction=(AmountReservationTransaction) response;
+        		transactionOperationStatus=amountReservationTransaction.getTransactionOperationStatus();
+        		paymentConsentCompleteServerReferenceValue.setText(amountReservationTransaction.getServerReferenceCode());
+        		
+				if (transactionOperationStatus!=null && transactionOperationStatus.equalsIgnoreCase(PaymentStates.RESERVED)) {
+					paymentConsentCompleteChargeReservation.setVisibility(View.VISIBLE);
+				}
 			}
+		}
+	}
+
+	@Override
+	void processClaimResponse(AmountReservationTransaction response) {
+		if (response!=null) {
+    		paymentConsentCompleteStatusValue.setText(response.getTransactionOperationStatus());
 		}
 	}
 	
