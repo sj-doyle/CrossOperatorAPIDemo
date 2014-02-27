@@ -10,8 +10,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.webkit.CookieManager;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
+import android.webkit.CookieSyncManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -36,10 +35,7 @@ public class MainActivity extends Activity {
 	private static final String TAG = "MainActivity";
 
 	public static MainActivity mainActivityInstance = null;
-	static String userAgent = null;
 	
-//	public static InitiateAuthorization authorization = null;
-
 	/*
 	 * Currently selected developer operator/ serving operator
 	 */
@@ -91,17 +87,9 @@ public class MainActivity extends Activity {
 		 */
 		mainActivityInstance = this;
 
+		CookieSyncManager.createInstance(this.getApplicationContext());
 		CookieManager.getInstance().setAcceptCookie(true);
-		
-		/*
-		 * create a temporary WebView to obtain the user agent string that would
-		 * be used by the inbuilt browser - this may be needed
-		 */
-		WebView fwv = new WebView(mainActivityInstance);
-		WebSettings settings = fwv.getSettings();
-		userAgent = settings.getUserAgentString();
-		
-		
+				
 		ArrayAdapter<String> developerOperatorAdapter = new ArrayAdapter<String>(this,   
 				android.R.layout.simple_spinner_item, DiscoveryDeveloperOperatorSettings.getOperatorNames());
 		developerOperatorAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // The drop down view
@@ -174,10 +162,12 @@ public class MainActivity extends Activity {
 		 * From the standard Android phone state retrieve values of interest for
 		 * display/ discovery
 		 */
-		PhoneState state = PhoneUtils
-				.getPhoneState(
-						(TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE),
-						(ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE));
+		Log.d(TAG, "initiating checkStatus");
+		TelephonyManager telephonyManager=(TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+		ConnectivityManager connectivityManager=(ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+		Log.d(TAG, "telephonyManager="+telephonyManager+" connectivityManager="+connectivityManager);
+		
+		PhoneState state = PhoneUtils.getPhoneState(telephonyManager, connectivityManager);
 
 		String mcc = state.getMcc(); // Mobile country code
 		String mnc = state.getMnc(); // Mobile network code
@@ -214,6 +204,7 @@ public class MainActivity extends Activity {
 			status = getString(R.string.statusOffNet);
 		}
 		vStatus.setText(status);
+		Log.d(TAG, "status="+status);
 	}
 
 	/*
@@ -376,7 +367,7 @@ public class MainActivity extends Activity {
 				
 				new InitialDiscoveryTask(mainActivityInstance, developerOperator.getEndpoint(),
 						developerOperator.getAppKey(), developerOperator.getAppSecret(),
-						mcc, mnc, userAgent, cookiesEnabled, servingOperator.getIpaddress()).execute();
+						mcc, mnc, cookiesEnabled, servingOperator.getIpaddress()).execute();
 
 			} else {
 				/*

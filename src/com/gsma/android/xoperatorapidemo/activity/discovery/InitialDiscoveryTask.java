@@ -45,7 +45,6 @@ public class InitialDiscoveryTask extends AsyncTask<Void, Void, JSONObject> {
 	String consumerSecret; 	// authorize access
 	String mcc; // mobile country code of the user's subscription
 	String mnc; // mobile network code of the user's subscription
-	String userAgent; // browser user agent string to include in requests
 	String sourceIP;
 	
 	Boolean enableCookies;
@@ -56,14 +55,13 @@ public class InitialDiscoveryTask extends AsyncTask<Void, Void, JSONObject> {
 	 * standard constructor - receives information from MainActivity
 	 */
 	public InitialDiscoveryTask(Activity invokingActivity, String serviceUri, String consumerKey, String consumerSecret,
-			String mcc, String mnc, String userAgent, Boolean enableCookies, String sourceIP) {
+			String mcc, String mnc, Boolean enableCookies, String sourceIP) {
 		this.invokingActivity=invokingActivity;
 		this.serviceUri = serviceUri;
 		this.consumerKey = consumerKey;
 		this.consumerSecret = consumerSecret;
 		this.mcc = mcc;
 		this.mnc = mnc;
-		this.userAgent = userAgent;
 		this.enableCookies = enableCookies;
 		this.sourceIP = sourceIP;
 	}
