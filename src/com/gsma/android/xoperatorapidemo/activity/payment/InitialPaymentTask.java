@@ -13,7 +13,7 @@ import org.apache.http.params.HttpParams;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
+import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 import org.json.JSONObject;
 
 import android.app.Activity;
@@ -108,8 +108,8 @@ class InitialPaymentTask extends AsyncTask<Void, Void, JSONObject> {
 				amountTransaction.setCallbackReference(callbackReference);
 		
 				ObjectMapper objectMapper = new ObjectMapper();
-				objectMapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
-					jsonData=objectMapper.writeValueAsString(amountTransactionWrapper);
+				objectMapper.setSerializationInclusion(Inclusion.NON_NULL);
+				jsonData=objectMapper.writeValueAsString(amountTransactionWrapper);
 			} else {
 				endpoint=discoveryData.getResponse().getApi("payment").getHref("reserve");
 				
@@ -130,7 +130,7 @@ class InitialPaymentTask extends AsyncTask<Void, Void, JSONObject> {
 				amountReservationTransaction.setReferenceSequence(1);
 		
 				ObjectMapper objectMapper = new ObjectMapper();
-				objectMapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
+				objectMapper.setSerializationInclusion(Inclusion.NON_NULL);
 				jsonData=objectMapper.writeValueAsString(amountReservationTransactionWrapper);
 			}
 			

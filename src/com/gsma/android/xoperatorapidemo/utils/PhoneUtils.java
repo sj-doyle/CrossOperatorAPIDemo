@@ -3,7 +3,6 @@ package com.gsma.android.xoperatorapidemo.utils;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 
 /**
  * extract useful phone state information and return in the form of a PhoneState
@@ -34,9 +33,9 @@ public class PhoneUtils {
 		 */
 		NetworkInfo activeNetwork = connectivityMgr.getActiveNetworkInfo();
 
-		if (activeNetwork != null) {
-			Log.d(TAG, "activeNetwork = " + activeNetwork.toString());
-		}
+//		if (activeNetwork != null) {
+//			Log.d(TAG, "activeNetwork = " + activeNetwork.toString());
+//		}
 
 		/*
 		 * subscriberId is normally the IMSI - not directly useful to discovery
@@ -75,17 +74,17 @@ public class PhoneUtils {
 		String simOperator = telephonyMgr.getSimOperator();
 		String networkOperator = telephonyMgr.getNetworkOperator();
 
-		Log.d(TAG, "Connected to Internet? " + connected);
-		Log.d(TAG, "Connected to mobile data? " + usingMobileData);
-		Log.d(TAG, "Roaming? " + roaming);
-		Log.d(TAG, "Detected MSISDN? " + msisdn);
-		Log.d(TAG, "subscriberId? " + subscriberId);
-		Log.d(TAG, "deviceId? " + telephonyMgr.getDeviceId());
-		Log.d(TAG, "simOperator? " + simOperator);
-		Log.d(TAG, "simOperatorName? " + telephonyMgr.getSimOperatorName());
-		Log.d(TAG, "simCountryIso? " + telephonyMgr.getSimCountryIso());
-		Log.d(TAG, "simSerialNumber = " + simSerialNumber);
-		Log.d(TAG, "networkOperator = " + networkOperator);
+//		Log.d(TAG, "Connected to Internet? " + connected);
+//		Log.d(TAG, "Connected to mobile data? " + usingMobileData);
+//		Log.d(TAG, "Roaming? " + roaming);
+//		Log.d(TAG, "Detected MSISDN? " + msisdn);
+//		Log.d(TAG, "subscriberId? " + subscriberId);
+//		Log.d(TAG, "deviceId? " + telephonyMgr.getDeviceId());
+//		Log.d(TAG, "simOperator? " + simOperator);
+//		Log.d(TAG, "simOperatorName? " + telephonyMgr.getSimOperatorName());
+//		Log.d(TAG, "simCountryIso? " + telephonyMgr.getSimCountryIso());
+//		Log.d(TAG, "simSerialNumber = " + simSerialNumber);
+//		Log.d(TAG, "networkOperator = " + networkOperator);
 
 		/*
 		 * Mobile Country Code is obtained from the first three digits of

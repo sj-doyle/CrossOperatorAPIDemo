@@ -21,36 +21,16 @@ import com.gsma.android.xoperatorapidemo.utils.JsonUtils;
 /*
  * read a set of endpoints from a source InputStream and initiate OperatorID sign-in
  */
-class DiscoveryProcessEndpointsTask extends AsyncTask<Void, Void, JSONObject> {
-	private static final String TAG = "DiscoveryProcessEndpointsTask";
-
-	String contentType; // Content-Type header
-	HttpResponse httpResponse; // the HttpResponse object
-	InputStream inputStream; // InputStream from the HttpResponse
-	
-	Activity invokingActivity=null;
+class DiscoveryProcessEndpoints {
+	private static final String TAG = "DiscoveryProcessEndpoints";
 
 	/*
 	 * constructor requires the contentType header, HttpResponse and InputStream
 	 * from the HttpResponse
 	 */
-	public DiscoveryProcessEndpointsTask(Activity invokingActivity, String contentType,
+	public static JSONObject start(Activity invokingActivity, String contentType,
 			HttpResponse httpResponse, InputStream inputStream) {
-		this.invokingActivity=invokingActivity;
-		this.contentType = contentType;
-		this.httpResponse = httpResponse;
-		this.inputStream = inputStream;
-	}
 
-	/*
-	 * the background task firstly identifies this is a JSON response, and
-	 * extracts the OperatorID endpoint from the response. it then initiates
-	 * OperatorID sign-in
-	 * 
-	 * @see android.os.AsyncTask#doInBackground(Params[])
-	 */
-	@Override
-	protected JSONObject doInBackground(Void... params) {
 		JSONObject errorResponse = null;
 
 		try {
@@ -90,8 +70,6 @@ class DiscoveryProcessEndpointsTask extends AsyncTask<Void, Void, JSONObject> {
 
 							DiscoveryData discoveryData=JsonUtils.readDiscoveryData(contents);
 							MainActivity.updateDiscoveryData(discoveryData);
-							Intent intent = new Intent(invokingActivity,DiscoveryCompleteActivity.class);
-							invokingActivity.startActivity(intent);
 
 							/*
 							 * an HTTP status code of 400 or over indicates an
@@ -119,33 +97,4 @@ class DiscoveryProcessEndpointsTask extends AsyncTask<Void, Void, JSONObject> {
 		return errorResponse;
 	}
 
-	/*
-	 * on completion of this background task either this task has started the
-	 * next part of the process or an error has occurred.
-	 * 
-	 * @see android.os.AsyncTask#onPostExecute(java.lang.Object)
-	 */
-	@Override
-	protected void onPostExecute(JSONObject errorResponse) {
-		/*
-		 * if there is an error display to the end user
-		 */
-		if (errorResponse != null) {
-			/*
-			 * extract the error fields
-			 */
-			String error = JsonUtils.getJSONStringElement(errorResponse,
-					"error");
-			String errorDescription = JsonUtils.getJSONStringElement(
-					errorResponse, "error_description");
-			Log.d(TAG, "error=" + error);
-			Log.d(TAG, "error_description=" + errorDescription);
-
-			/*
-			 * display to the user
-			 */
-			MainActivity.mainActivityInstance.displayError(error,
-					errorDescription);
-		}
-	}
 }

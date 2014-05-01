@@ -22,6 +22,10 @@ public class Response implements Serializable {
 	 * "currency":"USD","apis":{"payment":{"link":[{"href":"https://att-ex-test.apigee.net/v1/payment/acr:Authorization/transactions/amount","rel":"transactionstatus"},{"href":"http://att-ex-test.apigee.net/v1/payment/acr:Authorization/transactions/amountReservation","rel":"reserve"},{"href":"http://att-ex-test.apigee.net/payment/v1_1/acr:de993519-7922-4a03-8204-4303f941f853/transactions/amount","rel":"uri"},{"href":"GET,POST-/payment/acr:Authorization/transactions/amount","rel":"scope"}]}}}}
 	 */
 
+	public Response () {
+		
+	}
+	
 	public Response (JSONObject jsonObject) throws JSONException {
 		if (jsonObject!=null) {
 			this.client_id=jsonObject.getString("client_id");
@@ -71,6 +75,27 @@ public class Response implements Serializable {
 	HashMap<String, Api> apis=null;
 	public HashMap<String, Api> getApis() { return this.apis; }
 	public Api getApi(String name) { return (name!=null&&apis!=null)?apis.get(name):null; }
+
+	public JSONObject toObject() throws JSONException {
+		JSONObject obj=new JSONObject();
+		obj.put("client_id", client_id);
+		obj.put("client_secret", client_secret);
+		obj.put("subscriber_operator", subscriber_operator);
+		obj.put("country", country);
+		obj.put("currency", currency);
+		if (apis!=null) obj.put("apis", apis);
+		return obj;
+	}
 	
+	public String toString() {
+		String rv=null;
+		try {
+			JSONObject obj = toObject();
+			rv=obj.toString();
+		} catch (JSONException e) {
+		}
+		return rv;
+	}
+
 }
 	

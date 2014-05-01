@@ -305,6 +305,18 @@ public class HttpUtils {
 		return encoded;
 	}
 	
+	public static String addUriParameter(String baseUrl, String paramName, String paramValue) {
+		String url=baseUrl;
+		if (paramName!=null && paramValue!=null) {
+			if (url.indexOf("?")>-1) {
+				url=url+"&"+encodeUriParameter(paramName)+"="+encodeUriParameter(paramValue);
+			} else {
+				url=url+"?"+encodeUriParameter(paramName)+"="+encodeUriParameter(paramValue);
+			}
+		}
+		return url;
+	}
+	
 	public static String getContentsFromHttpResponse(HttpResponse httpResponse) throws IOException {
 		InputStream inputStream = httpResponse.getEntity().getContent();
 		StringBuffer jsonResponse=new StringBuffer();

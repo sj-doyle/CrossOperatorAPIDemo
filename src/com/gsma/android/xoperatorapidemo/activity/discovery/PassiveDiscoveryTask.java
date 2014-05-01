@@ -24,21 +24,22 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.webkit.CookieManager;
 
 import com.gsma.android.xoperatorapidemo.activity.MainActivity;
+import com.gsma.android.xoperatorapidemo.activity.SettingsActivity;
 import com.gsma.android.xoperatorapidemo.discovery.DiscoveryData;
+import com.gsma.android.xoperatorapidemo.logo.LogoLoaderTask;
 import com.gsma.android.xoperatorapidemo.utils.HttpUtils;
 import com.gsma.android.xoperatorapidemo.utils.JsonUtils;
 
 /*
  * this is a background task which makes an initial connection to the discovery service - it will handle a variety of initial response types
  */
-public class InitialDiscoveryTask extends AsyncTask<Void, Void, JSONObject> {
-	private static final String TAG = "InitialDiscoveryTask";
+public class PassiveDiscoveryTask extends AsyncTask<Void, Void, JSONObject> {
+	private static final String TAG = "PassiveDiscoveryTask";
 
 	String serviceUri; // the URI of the discovery service
 	String consumerKey; // the consumerKey and optional secret of the application - used to
@@ -54,7 +55,7 @@ public class InitialDiscoveryTask extends AsyncTask<Void, Void, JSONObject> {
 	/*
 	 * standard constructor - receives information from MainActivity
 	 */
-	public InitialDiscoveryTask(Activity invokingActivity, String serviceUri, String consumerKey, String consumerSecret,
+	public PassiveDiscoveryTask(Activity invokingActivity, String serviceUri, String consumerKey, String consumerSecret,
 			String mcc, String mnc, Boolean enableCookies, String sourceIP) {
 		this.invokingActivity=invokingActivity;
 		this.serviceUri = serviceUri;
@@ -100,12 +101,7 @@ public class InitialDiscoveryTask extends AsyncTask<Void, Void, JSONObject> {
 
 		HttpGet httpRequest = new HttpGet(phase1Uri);
 		
-		/* if able to supply mcc & mnc set the accept type header for a JSON response */
-		if (mcc != null && mnc != null) {
-			httpRequest.addHeader("Accept", "application/json");
-		} else {
-			httpRequest.addHeader("Accept", "text/html");
-		}
+		httpRequest.addHeader("Accept", "application/json");
 		
 		if (sourceIP!=null) {
 			httpRequest.addHeader("x-source-ip", sourceIP);
@@ -113,8 +109,6 @@ public class InitialDiscoveryTask extends AsyncTask<Void, Void, JSONObject> {
 
 		try {
 
-			//TODO -workaround SSL errors
-			
 			HostnameVerifier hostnameVerifier = org.apache.http.conn.ssl.SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER;
 			SchemeRegistry registry = new SchemeRegistry();
 			SSLSocketFactory socketFactory = SSLSocketFactory.getSocketFactory();
@@ -178,85 +172,22 @@ public class InitialDiscoveryTask extends AsyncTask<Void, Void, JSONObject> {
 					Log.d(TAG, "Converting discovery data");
 					DiscoveryData discoveryData=JsonUtils.readDiscoveryData(is);
 					
+					Log.d(TAG, "Signalling discovery complete");
 					MainActivity.updateDiscoveryData(discoveryData);
 					
-					/*
-					 * 
-					 */
-					Intent intent = new Intent(
-							invokingActivity,
-							DiscoveryCompleteActivity.class);
-					invokingActivity.startActivity(intent);
-
-					/*
-					 * If HTML content has been returned some form of
-					 * intermediate page has been provided, reload the content
-					 * in a webview so that the user can interact with the
-					 * website
-					 */
-				} else if (HttpUtils.isHTML(contentType)) {
-					Log.d(TAG,
-							"Have HTML content - needs to be handled through the browser");
-
-					/*
-					 * create a new Intent which will load the current URI in a
-					 * WebView before continuing with the discovery process
-					 */
-					Intent intent = new Intent(
-							invokingActivity,
-							DisplayDiscoveryWebsiteActivity.class);
-					intent.putExtra("uri", phase1Uri);
-					intent.putExtra("consumerKey", consumerKey);
-					intent.putExtra("serviceUri", serviceUri);
-					intent.putExtra("enableCookies", enableCookies);
-					intent.putExtra("sourceIP", sourceIP);
-					invokingActivity.startActivity(intent);
+					Log.d(TAG, "Now fetching logos");
+					new LogoLoaderTask(invokingActivity, 
+							SettingsActivity.getDeveloperOperator().getLogoEndpoint(),
+							consumerKey, 
+							consumerSecret,
+							mcc, mnc, enableCookies, 
+							sourceIP, "small").execute();
 				}
 
 				/*
 				 * HTTP status code 302 is a redirect - there should also be a
 				 * location header
 				 */
-			} else if (statusCode == HttpStatus.SC_MOVED_TEMPORARILY && location != null) {
-
-				Log.d(TAG, "Redirect requested to " + location);
-
-				/*
-				 * check for the presence of a discovery token. if present
-				 * extract the value
-				 */
-				if (location.indexOf("mcc_mnc") > -1) {
-					String[] parts = location.split("mcc_mnc", 2);
-					if (parts.length == 2) {
-						String mcc_mnc = parts[1].replaceFirst("=", "")
-								.trim();
-						Log.d(TAG, "mcc_mnc = " + mcc_mnc);
-
-						/*
-						 * process the discovery token provided - through a
-						 * further background task which will use the discovery
-						 * token to fetch the endpoints
-						 */
-						ProcessDiscoveryTokenTask processTask = new ProcessDiscoveryTokenTask(
-								invokingActivity, mcc_mnc, consumerKey, serviceUri);
-						processTask.execute();
-
-					} // have a discovery token pair
-				} else { // no discovery token component in the URL
-					/*
-					 * if there is a redirect but no discovery token there is
-					 * something trying to redirect the users' browser - so
-					 * handle this in a WebView before continuing
-					 */
-					Intent intent = new Intent(
-							invokingActivity,
-							DisplayDiscoveryWebsiteActivity.class);
-					intent.putExtra("uri", location);
-					intent.putExtra("consumerKey", consumerKey);
-					intent.putExtra("serviceUri", serviceUri);
-					intent.putExtra("sourceIP", sourceIP);
-					invokingActivity.startActivity(intent);
-				}
 				/*
 				 * any HTTP status code 400 or above is an error
 				 */

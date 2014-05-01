@@ -30,8 +30,10 @@
             </intent-filter>
         </activity>
 
+        <activity android:name="com.gsma.android.xoperatorapidemo.activity.DemoActivity"/>
+        <activity android:name="com.gsma.android.xoperatorapidemo.activity.SettingsActivity"/>
+
         <activity android:name="com.gsma.android.xoperatorapidemo.activity.discovery.DisplayDiscoveryWebsiteActivity"/>
-        <activity android:name="com.gsma.android.xoperatorapidemo.activity.discovery.DiscoveryCompleteActivity"/>
         
         <activity android:name="com.gsma.android.xoperatorapidemo.activity.payment.PaymentStartActivity"/>
         <activity android:name="com.gsma.android.xoperatorapidemo.activity.payment.PaymentConsentCompleteActivity">

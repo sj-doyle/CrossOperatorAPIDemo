@@ -29,8 +29,12 @@ public class DiscoveryDeveloperOperatorSettings {
 //	private static final DeveloperOperatorSetting testDev=new DeveloperOperatorSetting("MWC 2014 Demo", 
 //			"https://etelco-prod.apigee.net/v1/discovery", "DmaPIXFihqJhHhVQwpk9NHd7BzIzQxOe", "Doul7PiXVFCNI77g");
 
-	private static final DeveloperOperatorSetting testDev=new DeveloperOperatorSetting("MWC 2014 Demo", 
-			"https://etelco-prod.apigee.net/v1/discovery", "BJL7na81ZEaaFuoz1bbqT3CyS5x9CAFS", "Mt6HAx5Ujb39Sbs0");	
+//	private static final DeveloperOperatorSetting testDev=new DeveloperOperatorSetting("ETel Demo", 
+//			"https://etelco-prod.apigee.net/v1/discovery", "BJL7na81ZEaaFuoz1bbqT3CyS5x9CAFS", "Mt6HAx5Ujb39Sbs0", "https://etelco-prod.apigee.net/v1/logo");	
+
+	private static final DeveloperOperatorSetting testDev=new DeveloperOperatorSetting("ETel Demo", 
+			"https://etelco-prod.apigee.net/v1/discovery", "BJL7na81ZEaaFuoz1bbqT3CyS5x9CAFS", "Mt6HAx5Ujb39Sbs0", "https://integration-dt.apiexchange.org/v1/logo");	
+
 	
 	private static String[] operatorNames=null;
 	private static final DeveloperOperatorSetting[] operators={testDev};

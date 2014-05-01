@@ -3,25 +3,57 @@
 
     <string name="app_name">Cross Operator API Demo</string>
     <string name="menu_settings">Settings</string>
-    <string name="start_text">Operator Discovery</string>
+    <string name="start_text">Operator Services</string>
+    
+    
+    <string name="labelOperatorID">Mobile Connect</string>
+    <string name="labelPayment1">Payment\n(1 Phase)</string>
+   	<string name="labelPayment2">Payment\n(2 Phase)</string>
+   	
+    <string name="startOperatorId">Connect via operator</string>
+    <string name="startPayment1">Pay via operator</string>
+   	<string name="startPayment2">Pay via operator</string>
+    
+    <string name="informationIntro">Phone status</string>
+    <string name="demos">Other demos</string>
+    <string name="settingsButton">Settings</string>
+    <string name="discoveryButton">Discover</string>
+    
     <string name="start">Start</string>
     <string name="restart">Restart</string>
-    <string name="demoID">DT ID Demo</string>
     <string name="requesting">Discovering</string>
-    <string name="promptStatus">Network Status</string>
-    <string name="promptMCC">MCC</string>
-    <string name="promptMNC">MNC</string>
-    <string name="promptMCCMNC">Send MCC/MNC in discovery</string>
-    <string name="promptCookies">Send cookies if using webview</string>
-    <string name="valueMCC"></string>
-    <string name="valueMNC"></string>
+    
+    <string name="promptDiscoveryStatus">Discovery</string>
+    <string name="promptStatus">Network</string>
+    <string name="promptMCC">Active MCC</string>
+    <string name="promptMNC">Active MNC</string>
+    <string name="valueDiscoveryStatus">discovery</string>
+    <string name="valueMCC">mcc</string>
+    <string name="valueMNC">mnc</string>
     <string name="valueStatus">unknown</string>
+    <string name="valueUnknown">unknown</string>
     <string name="notConnectedToInternet">Sorry, you don\'t seem to be connected to the Internet now.</string>
     <string name="unknownOperator">Sorry, the details for authenticating via your operator are not known</string>
     <string name="promptTestMode">Test Mode</string>
-    <string name="developerOperatorPrompt">Developer Operator</string>
-    <string name="servingOperatorPrompt">Serving Operator</string>
     
+    <string name="discoveryStatusUnknown">Unknown</string>
+    <string name="discoveryStatusPending">Not started</string>
+    <string name="discoveryStatusCached">Cached</string>
+    <string name="discoveryStatusStarted">Started</string>
+    <string name="discoveryStatusCompleted">Completed</string>
+    <string name="discoveryStatusFailer">Failed</string>
+        
+    <string name="demoTitle">Demo Services</string>
+    <string name="demoPrompt">Standalone demos not involving the OneAPI Exchange:</string>
+    <string name="demoDTIdentity">DT OpenID Connect Demo</string>
+    
+    <string name="settingsTitle">Settings</string>
+    <string name="promptMCCMNC">Send MCC/MNC in discovery</string>
+    <string name="promptCookies">Send cookies if using webview</string>
+	<string name="developerOperatorPrompt">Developer Operator</string>
+    <string name="servingOperatorPrompt">Serving Operator</string>
+    <string name="startupOptionPrompt">Discovery Startup Option</string>
+    <string name="clearCache">Clear Discovery/Logo Cache</string>
     
     <string name="makingRequest">making HTTP request to </string>
             

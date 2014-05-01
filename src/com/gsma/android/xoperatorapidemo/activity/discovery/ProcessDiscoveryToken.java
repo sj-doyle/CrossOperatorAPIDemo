@@ -12,10 +12,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.json.JSONObject;
 
 import android.app.Activity;
-import android.os.AsyncTask;
 import android.util.Log;
 
-import com.gsma.android.xoperatorapidemo.activity.MainActivity;
 import com.gsma.android.xoperatorapidemo.utils.HttpUtils;
 import com.gsma.android.xoperatorapidemo.utils.JsonUtils;
 
@@ -23,36 +21,16 @@ import com.gsma.android.xoperatorapidemo.utils.JsonUtils;
  * this class handles the process in which a discovery token is used to obtain the operator endpoints.
  * a request is made to the Discovery Service to get the endpoints for the given discovery token
  */
-class ProcessDiscoveryTokenTask extends AsyncTask<Void, Void, JSONObject> {
-	private static final String TAG = "ProcessDiscoveryTokenTask";
-
-	String mccmnc; // the discovery token obtained previously from the
-	// Discovery Service
-	String consumerKey; // API key for the application
-	String serviceUri; // base URI for the DiscoveryAPI
-	
-	Activity invokingActivity;
+class ProcessDiscoveryToken {
+	private static final String TAG = "ProcessDiscoveryToken";
 
 	/*
 	 * constructor requires a mccmnc from a previous stage of
 	 * interacting with the Discovery Service, the application API ConsumerKey
 	 * and the base URI of the DiscoveryAPI service
 	 */
-	public ProcessDiscoveryTokenTask(Activity invokingActivity, String mccmnc, String consumerKey,
-			String serviceUri) {
-		this.invokingActivity=invokingActivity;
-		this.mccmnc = mccmnc;
-		this.consumerKey = consumerKey;
-		this.serviceUri = serviceUri;
-	}
+	public static JSONObject start(Activity invokingActivity, String mccmnc, String consumerKey, String serviceUri) {
 
-	/*
-	 * the doInBackground function does the actual background processing
-	 * 
-	 * @see android.os.AsyncTask#doInBackground(Params[])
-	 */
-	@Override
-	protected JSONObject doInBackground(Void... params) {
 		JSONObject errorResponse = null;
 
 		try {
@@ -99,11 +77,10 @@ class ProcessDiscoveryTokenTask extends AsyncTask<Void, Void, JSONObject> {
 			InputStream is = httpEntity.getContent();
 
 			/*
-			 * read the endpoints and start OperatorID sign-in
+			 * read the endpoints 
 			 */
-			DiscoveryProcessEndpointsTask readEndpoints = new DiscoveryProcessEndpointsTask(invokingActivity,
+			errorResponse=DiscoveryProcessEndpoints.start(invokingActivity,
 					contentType, httpResponse, is);
-			readEndpoints.execute();
 
 			/*
 			 * convert the various internal error types to displayable errors
@@ -118,34 +95,5 @@ class ProcessDiscoveryTokenTask extends AsyncTask<Void, Void, JSONObject> {
 		return errorResponse;
 	}
 
-	/*
-	 * on completion of this background task either this task has started the
-	 * next part of the process or an error has occurred.
-	 * 
-	 * @see android.os.AsyncTask#onPostExecute(java.lang.Object)
-	 */
-	@Override
-	protected void onPostExecute(JSONObject errorResponse) {
-		/*
-		 * if there is an error display to the end user
-		 */
-		if (errorResponse != null) {
-			/*
-			 * extract the error fields
-			 */
-			String error = JsonUtils.getJSONStringElement(errorResponse,
-					"error");
-			String errorDescription = JsonUtils.getJSONStringElement(
-					errorResponse, "error_description");
-			Log.d(TAG, "error=" + error);
-			Log.d(TAG, "error_description=" + errorDescription);
-
-			/*
-			 * display to the user
-			 */
-			MainActivity.mainActivityInstance.displayError(error,
-					errorDescription);
-		}
-	}
 
 }

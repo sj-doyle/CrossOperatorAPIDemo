@@ -29,5 +29,12 @@ public class DiscoveryData implements Serializable {
 	Response response=null;
 	public Response getResponse() { return this.response; }
 	public void setResponse(Response response) { this.response=response; }
+	
+	public JSONObject toObject() throws JSONException {
+		JSONObject obj=new JSONObject();
+		obj.put("ttl", ttl);
+		if (response!=null) obj.put("response", response);
+		return obj;
+	}
 
 }

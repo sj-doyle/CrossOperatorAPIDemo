@@ -12,7 +12,7 @@ import org.apache.http.params.HttpParams;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
+import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -77,7 +77,7 @@ class ReservationClaimTask extends AsyncTask<Void, Void, AmountReservationTransa
 			claim.setOriginalServerReferenceCode(amountReservationTransaction.getServerReferenceCode());
 			
 			ObjectMapper objectMapper = new ObjectMapper();
-			objectMapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
+			objectMapper.setSerializationInclusion(Inclusion.NON_NULL);
 			
 			try {
 				String jsonData = objectMapper.writeValueAsString(amountReservationTransactionWrapper);

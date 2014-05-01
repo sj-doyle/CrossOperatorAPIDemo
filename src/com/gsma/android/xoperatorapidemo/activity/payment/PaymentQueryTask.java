@@ -1,42 +1,23 @@
 package com.gsma.android.xoperatorapidemo.activity.payment;
 
 import java.io.IOException;
-import java.util.UUID;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.params.ClientPNames;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.params.HttpParams;
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
-import org.json.JSONObject;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.view.View;
 
 import com.gsma.android.xoperatorapidemo.discovery.DiscoveryData;
-import com.gsma.android.xoperatorapidemo.discovery.LinkConstants;
-import com.gsma.android.xoperatorapidemo.payment.AmountReservationTransaction;
 import com.gsma.android.xoperatorapidemo.payment.AmountReservationTransactionWrapper;
-import com.gsma.android.xoperatorapidemo.payment.AmountTransaction;
 import com.gsma.android.xoperatorapidemo.payment.AmountTransactionWrapper;
-import com.gsma.android.xoperatorapidemo.payment.CallbackReference;
-import com.gsma.android.xoperatorapidemo.payment.ChargingInformation;
-import com.gsma.android.xoperatorapidemo.payment.ChargingMetaData;
-import com.gsma.android.xoperatorapidemo.payment.PaymentAmount;
 import com.gsma.android.xoperatorapidemo.payment.PaymentStates;
 import com.gsma.android.xoperatorapidemo.utils.HttpUtils;
-import com.gsma.android.xoperatorapidemo.utils.JsonUtils;
 
 class PaymentQueryTask extends AsyncTask<Void, Void, Object> {
 	private static final String TAG = "PaymentQueryTask";

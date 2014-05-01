@@ -14,6 +14,10 @@ public class Link implements Serializable {
 	String href=null;
 	String rel=null;
 	
+	public Link() {
+		
+	}
+	
 	public Link(JSONObject json) throws JSONException { 
 		if (json!=null) {
 			this.rel=json.getString("rel");
@@ -23,8 +27,6 @@ public class Link implements Serializable {
 		}
 	}
 	
-	public Link() {}
-
 	public String getHref() { return this.href; }
 	public void setHRef(String href) { this.href=href; }
 	
